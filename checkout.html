@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - FANCY FEET UG</title>
+    
+    <style>
+        /* ============================================
+           RESET & BASE
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f0eb;
+            color: #2d1b12;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(199, 154, 110, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(90, 62, 43, 0.05) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        /* ============================================
+           HEADER
+           ============================================ */
+        header {
+            background: linear-gradient(135deg, #5a3e2b, #3d2a1d, #2d1b12);
+            color: #f5ede6;
+            padding: 1.2rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid #c79a6e;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 2.4rem;
+            letter-spacing: 3px;
+            font-weight: 900;
+            color: #f5ede6;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo h1::after {
+            content: '👟';
+            margin-left: 10px;
+            font-size: 2rem;
+        }
+
+        .logo .tagline {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-style: italic;
+            color: #d4c5b8;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        nav a {
+            color: #f5ede6;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.6rem 1.4rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        nav a:hover::before {
+            left: 100%;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        nav a.active {
+            background: linear-gradient(135deg, #c79a6e, #b8895a);
+            color: #2d1b12;
+            box-shadow: 0 4px 20px rgba(199, 154, 110, 0.4);
+        }
+
+        #cart-count {
+            display: inline-block;
+            background: #ffd700;
+            color: #2d1b12;
+            border-radius: 50%;
+            padding: 0 8px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            min-width: 22px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+        }
+
+        /* ============================================
+           CHECKOUT PAGE
+           ============================================ */
+        .checkout-container {
+            max-width: 700px;
+            margin: 2rem auto 3rem;
+        }
+
+        .checkout-container h2 {
+            color: #2d1b12;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 900;
+        }
+
+        .checkout-container h2 span {
+            color: #c79a6e;
+        }
+
+        .checkout-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid #c79a6e;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #2d1b12;
+        }
+
+        .form-group label .required {
+            color: #e74c3c;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #d4c5b8;
+            border-radius: 14px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: #faf8f7;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #c79a6e;
+            box-shadow: 0 0 0 5px rgba(199, 154, 110, 0.15);
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #aaa;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* ============================================
+           ORDER SUMMARY
+           ============================================ */
+        .order-summary {
+            background: #f8f4f0;
+            padding: 1.8rem;
+            border-radius: 16px;
+            margin: 1.5rem 0 2rem;
+            border: 2px solid #e8ddd2;
+        }
+
+        .order-summary h3 {
+            margin-bottom: 1rem;
+            color: #2d1b12;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #d4c5b8;
+            padding-bottom: 0.5rem;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #e8ddd2;
+            color: #2d1b12;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-item-name {
+            font-weight: 600;
+        }
+
+        .order-item-price {
+            font-weight: 700;
+            color: #5a3e2b;
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.4rem;
+            padding-top: 1rem;
+            border-top: 2px solid #d4c5b8;
+            margin-top: 0.5rem;
+            color: #2d1b12;
+        }
+
+        .order-total .total-label {
+            font-weight: 700;
+        }
+
+        .order-total .total-amount {
+            font-weight: 900;
+            color: #5a3e2b;
+            font-size: 1.5rem;
+        }
+
+        /* ============================================
+           BUTTONS
+           ============================================ */
+        .btn-place-order {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .btn-place-order:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 30px rgba(37, 211, 102, 0.4);
+            background: linear-gradient(135deg, #128C7E, #075E54);
+        }
+
+        .btn-place-order:active {
+            transform: scale(0.97);
+        }
+
+        /* ============================================
+           EMPTY CART MESSAGE
+           ============================================ */
+        .empty-cart-message {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .empty-cart-message p {
+            font-size: 1.2rem;
+            color: #8a7a6e;
+            margin-bottom: 1rem;
+        }
+
+        .empty-cart-message a {
+            color: #5a3e2b;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 12px 35px;
+            border: 2px solid #5a3e2b;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .empty-cart-message a:hover {
+            background: #5a3e2b;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        footer {
+            background: linear-gradient(135deg, #2d1b12, #1a0f0a);
+            color: #c9b5a6;
+            text-align: center;
+            padding: 2.5rem 0;
+            margin-top: auto;
+            border-top: 4px solid #c79a6e;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #c79a6e, #ffd700, #c79a6e);
+            background-size: 200% 100%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        footer p {
+            opacity: 0.85;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
+        .footer-heart {
+            color: #e74c3c;
+            animation: pulse 1.5s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+            nav a {
+                padding: 0.4rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .checkout-form {
+                padding: 1.5rem;
+            }
+
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+
+            .checkout-container h2 {
+                font-size: 1.8rem;
+            }
+
+            .order-total {
+                font-size: 1.2rem;
+            }
+
+            .order-total .total-amount {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+
+            .checkout-container h2 {
+                font-size: 1.5rem;
+            }
+
+            .checkout-form {
+                padding: 1rem;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                padding: 10px 14px;
+                font-size: 0.9rem;
+            }
+
+            .order-summary {
+                padding: 1rem;
+            }
+
+            .btn-place-order {
+                font-size: 1rem;
+                padding: 14px;
+            }
+        }
+
+        /* ============================================
+           SCROLLBAR
+           ============================================ */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f0ebe6;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #c79a6e, #5a3e2b);
+            border-radius: 10px;
+            border: 3px solid #f0ebe6;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #5a3e2b, #2d1b12);
+        }
+
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .checkout-form {
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+    
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <h1>FANCY FEET UG</h1>
+                <p class="tagline">✦ Step into style & comfort ✦</p>
+            </div>
+            <nav>
+                <a href="index.html">Products</a>
+                <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+                <a href="checkout.html" class="active">Checkout</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="container">
+        <div class="checkout-container">
+            <h2>🛍️ <span>Checkout</span></h2>
+            
+            <form id="checkout-form" class="checkout-form">
+                
+                <!-- Customer Details -->
+                <div class="form-group">
+                    <label for="name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" placeholder="e.g., John Doe" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" placeholder="e.g., john@example.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="phone" name="phone" placeholder="e.g., 07XXXXXXXX" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">Delivery Address <span class="required">*</span></label>
+                    <textarea id="address" name="address" rows="3" placeholder="Enter your full delivery address" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">Order Notes (Optional)</label>
+                    <textarea id="notes" name="notes" rows="2" placeholder="Any special delivery instructions?"></textarea>
+                </div>
+                
+                <!-- Order Summary -->
+                <div id="order-summary" class="order-summary">
+                    <h3>📋 Your Order</h3>
+                    <div id="checkout-items">
+                        <!-- Order items loaded dynamically by JavaScript -->
+                    </div>
+                    <div class="order-total">
+                        <span class="total-label">Total:</span>
+                        <span class="total-amount" id="checkout-total">UGX 0</span>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-place-order">💬 Send to WhatsApp</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p>© 2026 FANCY FEET UG &nbsp;|&nbsp; Made with <span class="footer-heart">❤️</span> in Uganda &nbsp;|&nbsp; Step into style & comfort</p>
+    </footer>
+
+    <!-- ============================================
+         JAVASCRIPT - WHATSAPP INTEGRATION
+         ============================================ -->
+    <script>
+        /* ============================================
+           PRODUCT DATA
+           ============================================ */
+        const products = [
+            // ===== SANDALS (9) =====
+            { id: 1, name: "BIG BACKLE SANDALS", price: 85000, category: "Sandals", image: "BIG BACKLE SANDALS.jpg" },
+            { id: 2, name: "CRISS CROSS SANDALS", price: 65000, category: "Sandals", image: "CRISS CROSS SANDALS.jpg" },
+            { id: 3, name: "DOUBLE BUCKLE SANDALS", price: 89000, category: "Sandals", image: "DOUBLE BUCKLE SANDALS.jpg" },
+            { id: 4, name: "DOUBLE STRAP SANDALS", price: 45000, category: "Sandals", image: "DOUBLE STRAP SANDALS.jpg" },
+            { id: 5, name: "RHINE STONE SLIDE SANDALS", price: 95000, category: "Sandals", image: "RHINE STONE SLIDE SANDALS.jpg" },
+            { id: 6, name: "SANDALS", price: 55000, category: "Sandals", image: "SANDALS.jpg" },
+            { id: 7, name: "THONG SANDALS", price: 40000, category: "Sandals", image: "THONG SANDALS.jpg" },
+            { id: 8, name: "TOE RING FLAT SANDALS", price: 70000, category: "Sandals", image: "TOE RING FLAT SANDALS.jpg" },
+            { id: 9, name: "WOVEN SANDALS", price: 80000, category: "Sandals", image: "WOVEN SANDALS.jpg" },
+            
+            // ===== LOAFERS (2) =====
+            { id: 10, name: "LOAFERS", price: 75000, category: "Loafers", image: "LOAFERS.jpg" },
+            { id: 11, name: "MESH LOAFERS", price: 95000, category: "Loafers", image: "MESH LOAFERS.jpg" },
+            
+            // ===== SHOES (2) =====
+            { id: 12, name: "SAMBAS", price: 55000, category: "Shoes", image: "SAMBAS.jpg" },
+            { id: 13, name: "SLING BACK SHOES", price: 120000, category: "Shoes", image: "SLING BACK SHOES.jpg" },
+            
+            // ===== FLATS (7) =====
+            { id: 14, name: "FLATS", price: 65000, category: "Flats", image: "FLATS.jpg" },
+            { id: 15, name: "FLAT SLIDES", price: 50000, category: "Flats", image: "FLAT SLIDES.jpg" },
+            { id: 16, name: "LEAF VINE FLATS", price: 80000, category: "Flats", image: "LEAF VINE FLATS.jpg" },
+            { id: 17, name: "MULE FLATS", price: 75000, category: "Flats", image: "MULE FLATS.jpg" },
+            { id: 18, name: "STRAPPY FLATS", price: 110000, category: "Flats", image: "STRAPPY FLATS.jpg" },
+            { id: 19, name: "STRAPY FLATS", price: 90000, category: "Flats", image: "STRAPY FLATS.jpg" },
+            { id: 20, name: "TOE RING FLATS", price: 70000, category: "Flats", image: "TOE RING FLATS.jpg" },
+            
+            // ===== MULES (4) =====
+            { id: 21, name: "BOW NOTE MULE SLIDES", price: 85000, category: "Mules", image: "BOW NOTE MULE SLIDES.jpg" },
+            { id: 22, name: "MESH MULES", price: 90000, category: "Mules", image: "MESH MULES.jpg" },
+            { id: 23, name: "RHINESTONE MULES", price: 100000, category: "Mules", image: "RHINESTONE MULES.jpg" },
+            { id: 24, name: "SLIP ON MULES", price: 85000, category: "Mules", image: "SLIP ON MULES.jpg" },
+            
+            // ===== WEDGES (1) =====
+            { id: 25, name: "WEDGES", price: 95000, category: "Wedges", image: "WEDGES.jpg" }
+        ];
+
+        /* ============================================
+           WHATSAPP CONFIGURATION
+           ============================================ */
+        // 🔥 CHANGE THIS TO YOUR WHATSAPP NUMBER 🔥
+        const WHATSAPP_NUMBER = "256700000000"; // Format: 256XXXXXXXX (Uganda)
+        // Add your country code: 256 for Uganda, 254 for Kenya, etc.
+
+        /* ============================================
+           CART MANAGEMENT
+           ============================================ */
+
+        function getCart() {
+            try {
+                const cart = localStorage.getItem('hfeetsCart');
+                return cart ? JSON.parse(cart) : [];
+            } catch (error) {
+                console.error("Error loading cart:", error);
+                return [];
+            }
+        }
+
+        function saveCart(cart) {
+            try {
+                localStorage.setItem('hfeetsCart', JSON.stringify(cart));
+                updateCartCount();
+            } catch (error) {
+                console.error("Error saving cart:", error);
+            }
+        }
+
+        function updateCartCount() {
+            const cart = getCart();
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelectorAll('#cart-count').forEach(el => {
+                el.textContent = totalItems;
+            });
+        }
+
+        /* ============================================
+           DISPLAY CHECKOUT ORDER
+           ============================================ */
+
+        function displayCheckoutOrder() {
+            const container = document.getElementById('checkout-items');
+            if (!container) return;
+            
+            const cart = getCart();
+            
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart-message">
+                        <p>🛒 Your cart is empty</p>
+                        <a href="index.html">Continue Shopping</a>
+                    </div>
+                `;
+                document.getElementById('checkout-total').textContent = 'UGX 0';
+                return;
+            }
+            
+            let total = 0;
+            container.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                return `
+                    <div class="order-item">
+                        <span class="order-item-name">${item.name} × ${item.quantity}</span>
+                        <span class="order-item-price">UGX ${itemTotal.toLocaleString()}</span>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('checkout-total').textContent = `UGX ${total.toLocaleString()}`;
+        }
+
+        /* ============================================
+           VALIDATION FUNCTIONS
+           ============================================ */
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function isValidPhone(phone) {
+            return /^(07[0-9]{8}|2567[0-9]{8})$/.test(phone);
+        }
+
+        /* ============================================
+           SEND ORDER TO WHATSAPP
+           ============================================ */
+
+        function sendOrderToWhatsApp(orderData) {
+            // Build the message
+            const message = `🛍️ *NEW ORDER FROM FANCY FEET UG!*%0A%0A` +
+                           `👤 *Customer Details*%0A` +
+                           `Name: ${orderData.name}%0A` +
+                           `Email: ${orderData.email}%0A` +
+                           `Phone: ${orderData.phone}%0A` +
+                           `Address: ${orderData.address}%0A` +
+                           `${orderData.notes ? `Notes: ${orderData.notes}%0A` : ''}` +
+                           `%0A📦 *Order Items*%0A` +
+                           `${orderData.items}%0A` +
+                           `%0A💰 *Total: UGX ${orderData.total.toLocaleString()}*%0A` +
+                           `%0A📅 Order Date: ${new Date().toLocaleString()}`;
+
+            // Create WhatsApp URL
+            const whatsappUrl = `https://wa.me/${+256762846291}?text=${message}`;
+            
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+        }
+
+        /* ============================================
+           CHECKOUT FORM SUBMISSION
+           ============================================ */
+
+        function setupCheckoutForm() {
+            const form = document.getElementById('checkout-form');
+            if (!form) return;
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                try {
+                    // Get form values
+                    const name = document.getElementById('name').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const phone = document.getElementById('phone').value.trim();
+                    const address = document.getElementById('address').value.trim();
+                    const notes = document.getElementById('notes').value.trim();
+                    
+                    const cart = getCart();
+                    
+                    // Validation checks
+                    if (cart.length === 0) {
+                        throw new Error("Your cart is empty. Please add items before checking out.");
+                    }
+                    
+                    if (!name || !email || !phone || !address) {
+                        throw new Error("Please fill in all required fields.");
+                    }
+                    
+                    if (!isValidEmail(email)) {
+                        throw new Error("Please enter a valid email address (e.g., name@example.com).");
+                    }
+                    
+                    if (!isValidPhone(phone)) {
+                        throw new Error("Please enter a valid phone number (e.g., 07XXXXXXXX or 2567XXXXXXXX).");
+                    }
+                    
+                    // Calculate total and build order items string
+                    let total = 0;
+                    let itemsString = '';
+                    cart.forEach(item => {
+                        const itemTotal = item.price * item.quantity;
+                        total += itemTotal;
+                        itemsString += `• ${item.name} × ${item.quantity} = UGX ${itemTotal.toLocaleString()}%0A`;
+                    });
+                    
+                    // Prepare order data for WhatsApp
+                    const orderData = {
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        address: address,
+                        notes: notes,
+                        items: itemsString,
+                        total: total
+                    };
+                    
+                    // Send to WhatsApp
+                    sendOrderToWhatsApp(orderData);
+                    
+                    // Clear cart and redirect after a delay
+                    setTimeout(() => {
+                        localStorage.removeItem('hfeetsCart');
+                        updateCartCount();
+                        window.location.href = 'index.html';
+                    }, 2000);
+                    
+                } catch (error) {
+                    alert('❌ ' + error.message);
+                }
+            });
+        }
+
+        /* ============================================
+           PAGE INITIALIZATION
+           ============================================ */
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            displayCheckoutOrder();
+            setupCheckoutForm();
+        });
+    </script>
+    
+</body>
+</html>

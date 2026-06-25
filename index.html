@@ -1,0 +1,812 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FANCY FEET UG - Premium Footwear</title>
+    
+    <style>
+        /* ============================================
+           RESET & BASE
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f0eb;
+            color: #2d1b12;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(199, 154, 110, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(90, 62, 43, 0.05) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        /* ============================================
+           HEADER
+           ============================================ */
+        header {
+            background: linear-gradient(135deg, #5a3e2b, #3d2a1d, #2d1b12);
+            color: #f5ede6;
+            padding: 1.2rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid #c79a6e;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 2.4rem;
+            letter-spacing: 3px;
+            font-weight: 900;
+            color: #f5ede6;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo h1::after {
+            content: '👟';
+            margin-left: 10px;
+            font-size: 2rem;
+        }
+
+        .logo .tagline {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-style: italic;
+            color: #d4c5b8;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        nav a {
+            color: #f5ede6;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.6rem 1.4rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        nav a:hover::before {
+            left: 100%;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        nav a.active {
+            background: linear-gradient(135deg, #c79a6e, #b8895a);
+            color: #2d1b12;
+            box-shadow: 0 4px 20px rgba(199, 154, 110, 0.4);
+        }
+
+        #cart-count {
+            display: inline-block;
+            background: #ffd700;
+            color: #2d1b12;
+            border-radius: 50%;
+            padding: 0 8px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            min-width: 22px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+        }
+
+        /* ============================================
+           SEARCH & FILTER
+           ============================================ */
+        .search-filter {
+            margin: 2.5rem 0 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .search-box {
+            padding: 16px 28px;
+            border: 2px solid #d4c5b8;
+            border-radius: 50px;
+            font-size: 1rem;
+            background: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #c79a6e;
+            box-shadow: 0 0 0 5px rgba(199, 154, 110, 0.15), 0 4px 20px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .search-box::placeholder {
+            color: #8a7a6e;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+        }
+
+        .filter-btn {
+            padding: 10px 26px;
+            border: 2px solid #d4c5b8;
+            background: white;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            color: #3d2a1d;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: #c79a6e;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .filter-btn:hover::after {
+            width: 80%;
+        }
+
+        .filter-btn:hover {
+            background: #e8ddd2;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #5a3e2b, #3d2a1d);
+            color: white;
+            border-color: #5a3e2b;
+            box-shadow: 0 6px 25px rgba(90, 62, 43, 0.35);
+        }
+
+        .filter-btn.active::after {
+            width: 80%;
+            background: #ffd700;
+        }
+
+        /* ============================================
+           PRODUCT GRID
+           ============================================ */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0 4rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(199, 154, 110, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 20px;
+            pointer-events: none;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(90, 62, 43, 0.25);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            background: #e8ddd2;
+            transition: transform 0.6s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.08);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #ffd700, #f7971e);
+            color: #2d1b12;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+            z-index: 5;
+        }
+
+        .product-info {
+            padding: 1.5rem 1.5rem 1.8rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .product-name {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #2d1b12;
+            margin-bottom: 0.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .product-card:hover .product-name {
+            color: #5a3e2b;
+        }
+
+        .product-category {
+            font-size: 0.75rem;
+            color: #8a7a6e;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #5a3e2b;
+            margin: 0.5rem 0 0.8rem;
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #5a3e2b, #3d2a1d);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: auto;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-add::after {
+            content: ' 🛒';
+        }
+
+        .btn-add::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-add:hover::before {
+            left: 100%;
+        }
+
+        .btn-add:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 30px rgba(90, 62, 43, 0.4);
+            background: linear-gradient(135deg, #3d2a1d, #2d1b12);
+        }
+
+        .btn-add:active {
+            transform: scale(0.95);
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        footer {
+            background: linear-gradient(135deg, #2d1b12, #1a0f0a);
+            color: #c9b5a6;
+            text-align: center;
+            padding: 2.5rem 0;
+            margin-top: auto;
+            border-top: 4px solid #c79a6e;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #c79a6e, #ffd700, #c79a6e);
+            background-size: 200% 100%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        footer p {
+            opacity: 0.85;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
+        .footer-heart {
+            color: #e74c3c;
+            animation: pulse 1.5s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+            nav a {
+                padding: 0.4rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1.2rem;
+            }
+
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+
+            .product-image {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+
+            .filter-buttons {
+                justify-content: center;
+            }
+
+            .filter-btn {
+                font-size: 0.75rem;
+                padding: 6px 14px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+            }
+
+            .product-image {
+                height: 150px;
+            }
+
+            .product-name {
+                font-size: 0.85rem;
+            }
+
+            .product-price {
+                font-size: 1rem;
+            }
+
+            .btn-add {
+                font-size: 0.75rem;
+                padding: 10px;
+            }
+
+            .product-info {
+                padding: 0.8rem;
+            }
+
+            .product-badge {
+                font-size: 0.6rem;
+                padding: 3px 10px;
+                top: 10px;
+                right: 10px;
+            }
+        }
+
+        /* ============================================
+           SCROLLBAR
+           ============================================ */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f0ebe6;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #c79a6e, #5a3e2b);
+            border-radius: 10px;
+            border: 3px solid #f0ebe6;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #5a3e2b, #2d1b12);
+        }
+
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .product-card:nth-child(2) { animation-delay: 0.1s; }
+        .product-card:nth-child(3) { animation-delay: 0.2s; }
+        .product-card:nth-child(4) { animation-delay: 0.3s; }
+        .product-card:nth-child(5) { animation-delay: 0.4s; }
+        .product-card:nth-child(6) { animation-delay: 0.5s; }
+        .product-card:nth-child(7) { animation-delay: 0.6s; }
+        .product-card:nth-child(8) { animation-delay: 0.7s; }
+        .product-card:nth-child(9) { animation-delay: 0.8s; }
+        .product-card:nth-child(10) { animation-delay: 0.9s; }
+        .product-card:nth-child(11) { animation-delay: 1.0s; }
+        .product-card:nth-child(12) { animation-delay: 1.1s; }
+        .product-card:nth-child(13) { animation-delay: 1.2s; }
+        .product-card:nth-child(14) { animation-delay: 1.3s; }
+        .product-card:nth-child(15) { animation-delay: 1.4s; }
+        .product-card:nth-child(16) { animation-delay: 1.5s; }
+        .product-card:nth-child(17) { animation-delay: 1.6s; }
+        .product-card:nth-child(18) { animation-delay: 1.7s; }
+        .product-card:nth-child(19) { animation-delay: 1.8s; }
+        .product-card:nth-child(20) { animation-delay: 1.9s; }
+        .product-card:nth-child(21) { animation-delay: 2.0s; }
+        .product-card:nth-child(22) { animation-delay: 2.1s; }
+        .product-card:nth-child(23) { animation-delay: 2.2s; }
+        .product-card:nth-child(24) { animation-delay: 2.3s; }
+        .product-card:nth-child(25) { animation-delay: 2.4s; }
+    </style>
+    
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <h1>FANCY FEET UG</h1>
+                <p class="tagline">✦ Step into style & comfort ✦</p>
+            </div>
+            <nav>
+                <a href="index.html" class="active">Products</a>
+                <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+                <a href="checkout.html">Checkout</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="container">
+
+        <!-- Search & Filter -->
+        <section class="search-filter">
+            <input type="text" id="search-input" placeholder="🔍 Search products..." class="search-box">
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-category="all">✨ All</button>
+                <button class="filter-btn" data-category="Sandals">🩴 Sandals</button>
+                <button class="filter-btn" data-category="Loafers">👞 Loafers</button>
+                <button class="filter-btn" data-category="Shoes">👟 Shoes</button>
+                <button class="filter-btn" data-category="Flats">🥿 Flats</button>
+                <button class="filter-btn" data-category="Mules">👡 Mules</button>
+                <button class="filter-btn" data-category="Wedges">👠 Wedges</button>
+            </div>
+        </section>
+
+        <!-- Products Grid -->
+        <section id="products-container" class="products-grid">
+            <!-- Products loaded dynamically by JavaScript -->
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p>© 2026 FANCY FEET UG &nbsp;|&nbsp; Made with <span class="footer-heart">❤️</span> in Uganda &nbsp;|&nbsp; Step into style & comfort</p>
+    </footer>
+
+    <!-- ============================================
+         JAVASCRIPT - "Sandals" Category Fixed
+         ============================================ -->
+    <script>
+        /* ============================================
+           PRODUCT DATA - "Sandals" Category
+           ============================================ */
+        const products = [
+            // ===== SANDALS (9) =====
+            { id: 1, name: "BIG BACKLE SANDALS", price: 85000, category: "Sandals", image: "BIG BACKLE SANDALS.jpg" },
+            { id: 2, name: "CRISS CROSS SANDALS", price: 65000, category: "Sandals", image: "CRISS CROSS SANDALS.jpg" },
+            { id: 3, name: "DOUBLE BUCKLE SANDALS", price: 89000, category: "Sandals", image: "DOUBLE BUCKLE SANDALS.jpg" },
+            { id: 4, name: "DOUBLE STRAP SANDALS", price: 45000, category: "Sandals", image: "DOUBLE STRAP SANDALS.jpg" },
+            { id: 5, name: "RHINE STONE SLIDE SANDALS", price: 45000, category: "Sandals", image: "RHINE STONE SLIDE SANDALS.jpg" },
+            { id: 6, name: "SANDALS", price: 45000, category: "Sandals", image: "SANDALS.jpg" },
+            { id: 7, name: "THONG SANDALS", price: 45000, category: "Sandals", image: "THONG SANDALS.jpg" },
+            { id: 8, name: "TOE RING FLAT SANDALS", price: 45000, category: "Sandals", image: "TOE RING FLAT SANDALS.jpg" },
+            { id: 9, name: "WOVEN SANDALS", price: 45000, category: "Sandals", image: "WOVEN SANDALS.jpg" },
+            
+            // ===== LOAFERS (2) =====
+            { id: 10, name: "LOAFERS", price: 85000, category: "Loafers", image: "LOAFERS.jpg" },
+            { id: 11, name: "MESH LOAFERS", price: 50000, category: "Loafers", image: "MESH LOAFERS.jpg" },
+            
+            // ===== SHOES (2) =====
+            { id: 12, name: "SAMBAS", price: 45000, category: "Shoes", image: "SAMBAS.jpg" },
+            { id: 13, name: "SLING BACK SHOES", price: 45000, category: "Shoes", image: "SLING BACK SHOES.jpg" },
+            
+            // ===== FLATS (7) =====
+            { id: 14, name: "FLATS", price: 45000, category: "Flats", image: "FLATS.jpg" },
+            { id: 15, name: "FLAT SLIDES", price: 45000, category: "Flats", image: "FLAT SLIDES.jpg" },
+            { id: 16, name: "LEAF VINE FLATS", price: 45000, category: "Flats", image: "LEAF VINE FLATS.jpg" },
+            { id: 17, name: "MULE FLATS", price: 45000, category: "Flats", image: "MULE FLATS.jpg" },
+            { id: 18, name: "STRAPPY FLATS", price: 45000, category: "Flats", image: "STRAPPY FLATS.jpg" },
+            { id: 19, name: "STRAPY FLATS", price: 90000, category: "Flats", image: "STRAPY FLATS.jpg" },
+            { id: 20, name: "TOE RING FLATS", price: 70000, category: "Flats", image: "TOE RING FLATS.jpg" },
+            
+            // ===== MULES (4) =====
+            { id: 21, name: "BOW NOTE MULE SLIDES", price: 85000, category: "Mules", image: "BOW NOTE MULE SLIDES.jpg" },
+            { id: 22, name: "MESH MULES", price: 90000, category: "Mules", image: "MESH MULES.jpg" },
+            { id: 23, name: "RHINESTONE MULES", price: 100000, category: "Mules", image: "RHINESTONE MULES.jpg" },
+            { id: 24, name: "SLIP ON MULES", price: 85000, category: "Mules", image: "SLIP ON MULES.jpg" },
+            
+            // ===== WEDGES (1) =====
+            { id: 25, name: "WEDGES", price: 95000, category: "Wedges", image: "WEDGES.jpg" }
+        ];
+
+        /* ============================================
+           CART MANAGEMENT
+           ============================================ */
+
+        function getCart() {
+            try {
+                const cart = localStorage.getItem('hfeetsCart');
+                return cart ? JSON.parse(cart) : [];
+            } catch (error) {
+                console.error("Error loading cart:", error);
+                return [];
+            }
+        }
+
+        function saveCart(cart) {
+            try {
+                localStorage.setItem('hfeetsCart', JSON.stringify(cart));
+                updateCartCount();
+            } catch (error) {
+                console.error("Error saving cart:", error);
+            }
+        }
+
+        function addToCart(productId) {
+            try {
+                const product = products.find(p => p.id === productId);
+                if (!product) throw new Error("Product not found");
+                
+                let cart = getCart();
+                const existingItem = cart.find(item => item.id === productId);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        quantity: 1,
+                        image: product.image
+                    });
+                }
+                
+                saveCart(cart);
+                
+                // Show added feedback
+                const btn = event.target;
+                btn.textContent = '✅ Added!';
+                btn.style.background = '#27ae60';
+                setTimeout(() => {
+                    btn.textContent = 'Add to Cart 🛒';
+                    btn.style.background = '';
+                }, 1500);
+                
+                if (document.getElementById('products-container')) {
+                    displayProducts();
+                }
+            } catch (error) {
+                console.error("Error adding to cart:", error);
+                alert("Failed to add item. Please try again.");
+            }
+        }
+
+        function updateCartCount() {
+            const cart = getCart();
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelectorAll('#cart-count').forEach(el => {
+                el.textContent = totalItems;
+            });
+        }
+
+        /* ============================================
+           DISPLAY PRODUCTS
+           ============================================ */
+
+        function displayProducts() {
+            const container = document.getElementById('products-container');
+            if (!container) return;
+            
+            const searchTerm = document.getElementById('search-input')?.value.toLowerCase() || '';
+            const activeCategory = document.querySelector('.filter-btn.active')?.dataset.category || 'all';
+            
+            let filteredProducts = products.filter(product => {
+                const matchesSearch = product.name.toLowerCase().includes(searchTerm);
+                const matchesCategory = activeCategory === 'all' || product.category === activeCategory;
+                return matchesSearch && matchesCategory;
+            });
+            
+            if (filteredProducts.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align:center; padding:4rem;">
+                        <p style="font-size: 3rem;">🔍</p>
+                        <p style="font-size: 1.3rem; color: #8a7a6e; margin-top: 1rem;">No products found 😢</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = filteredProducts.map((product, index) => `
+                <div class="product-card" style="animation-delay: ${index * 0.05}s">
+                    <img src="images/${product.image}" alt="${product.name}" 
+                         class="product-image" 
+                         onerror="this.src='https://via.placeholder.com/300x260/5a3e2b/ffffff?text=${product.name}'">
+                    <div class="product-badge">${product.category}</div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-category">${product.category}</div>
+                        <div class="product-price">UGX ${product.price.toLocaleString()}</div>
+                        <button class="btn-add" onclick="addToCart(${product.id})">Add to Cart</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setupSearchAndFilter() {
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', displayProducts);
+            }
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    displayProducts();
+                });
+            });
+        }
+
+        /* ============================================
+           PAGE INITIALIZATION
+           ============================================ */
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();
+            displayProducts();
+            setupSearchAndFilter();
+        });
+    </script>
+    
+</body>
+</html>
